@@ -11,6 +11,12 @@ abstract class ChatL10n {
     required this.fileButtonAccessibilityLabel,
     required this.inputPlaceholder,
     required this.sendButtonAccessibilityLabel,
+    required this.audioButtonAccessibilityLabel,
+    required this.today,
+    required this.yesterday,
+    required this.playButtonAccessibilityLabel,
+    required this.pauseButtonAccessibilityLabel,
+    required this.audioTrackAccessibilityLabel,
   });
 
   /// Accessibility label (hint) for the attachment button
@@ -22,11 +28,29 @@ abstract class ChatL10n {
   /// Accessibility label (hint) for the tap action on file message
   final String fileButtonAccessibilityLabel;
 
+  /// Accessibility label (hint) for the tap action on audio message when playing
+  final String pauseButtonAccessibilityLabel;
+
+  /// Accessibility label (hint) for the tap action on audio message when not playing
+  final String playButtonAccessibilityLabel;
+
   /// Placeholder for the text field
   final String inputPlaceholder;
 
   /// Accessibility label (hint) for the send button
   final String sendButtonAccessibilityLabel;
+
+  /// Accessibility label (hint) for the audio button
+  final String audioButtonAccessibilityLabel;
+
+  /// Today string
+  final String today;
+
+  /// Yesterday string
+  final String yesterday;
+
+  /// Accessibility label (hint) for the audio track
+  final String audioTrackAccessibilityLabel;
 }
 
 /// Arabic l10n which extends [ChatL10n]
@@ -42,7 +66,7 @@ class ChatL10nAr extends ChatL10n {
     String inputPlaceholder = 'الرسالة',
     String sendButtonAccessibilityLabel = 'إرسال',
   }) : super(
-          attachmentButtonAccessibilityLabel:
+          attachmentButtonAccessibilityLabel:attachmentButtonAccessibilityLabel,
               attachmentButtonAccessibilityLabel,
           emptyChatPlaceholder: emptyChatPlaceholder,
           fileButtonAccessibilityLabel: fileButtonAccessibilityLabel,
@@ -85,6 +109,12 @@ class ChatL10nEn extends ChatL10n {
     String fileButtonAccessibilityLabel = 'File',
     String inputPlaceholder = 'Message',
     String sendButtonAccessibilityLabel = 'Send',
+    String today = 'Today',
+    String yesterday = 'Yesterday',
+    String audioButtonAccessibilityLabel = 'Record audio message',
+    String playButtonAccessibilityLabel = 'Play',
+    String pauseButtonAccessibilityLabel = 'Pause',
+    String audioTrackAccessibilityLabel = 'Tap to play/pause, slide to seek',
   }) : super(
           attachmentButtonAccessibilityLabel:
               attachmentButtonAccessibilityLabel,
@@ -92,6 +122,12 @@ class ChatL10nEn extends ChatL10n {
           fileButtonAccessibilityLabel: fileButtonAccessibilityLabel,
           inputPlaceholder: inputPlaceholder,
           sendButtonAccessibilityLabel: sendButtonAccessibilityLabel,
+          today: today,
+          yesterday: yesterday,
+          audioButtonAccessibilityLabel: audioButtonAccessibilityLabel,
+          playButtonAccessibilityLabel: playButtonAccessibilityLabel,
+          pauseButtonAccessibilityLabel: pauseButtonAccessibilityLabel,
+          audioTrackAccessibilityLabel: audioTrackAccessibilityLabel,
         );
 }
 
@@ -107,6 +143,13 @@ class ChatL10nEs extends ChatL10n {
     String fileButtonAccessibilityLabel = 'Archivo',
     String inputPlaceholder = 'Mensaje',
     String sendButtonAccessibilityLabel = 'Enviar',
+    String today = 'Hoy',
+    String yesterday = 'Ayer',
+    String audioButtonAccessibilityLabel = 'Grabar mensaje de audio',
+    String playButtonAccessibilityLabel = 'Reproducir',
+    String pauseButtonAccessibilityLabel = 'Pausar',
+    String audioTrackAccessibilityLabel =
+        'Toca para reproducir/pausar, desliza para buscar',
   }) : super(
           attachmentButtonAccessibilityLabel:
               attachmentButtonAccessibilityLabel,
@@ -151,6 +194,13 @@ class ChatL10nPl extends ChatL10n {
     String fileButtonAccessibilityLabel = 'Plik',
     String inputPlaceholder = 'Napisz wiadomość',
     String sendButtonAccessibilityLabel = 'Wyślij',
+    String today = 'Dzisiaj',
+    String yesterday = 'Wczoraj',
+    String audioButtonAccessibilityLabel = 'Nagraj wiadomość dźwiękową',
+    String playButtonAccessibilityLabel = 'Odtwórz',
+    String pauseButtonAccessibilityLabel = 'Wstrzymać',
+    String audioTrackAccessibilityLabel =
+        'Dotknij, aby odtworzyć/wstrzymać, przesuń, aby wyszukać',
   }) : super(
           attachmentButtonAccessibilityLabel:
               attachmentButtonAccessibilityLabel,
@@ -195,6 +245,13 @@ class ChatL10nRu extends ChatL10n {
     String fileButtonAccessibilityLabel = 'Файл',
     String inputPlaceholder = 'Сообщение',
     String sendButtonAccessibilityLabel = 'Отправить',
+    String today = 'Сегодня',
+    String yesterday = 'Вчера',
+    String audioButtonAccessibilityLabel = 'Записать звуковое сообщение',
+    String playButtonAccessibilityLabel = 'Воспроизвести',
+    String pauseButtonAccessibilityLabel = 'Приостановить',
+    String audioTrackAccessibilityLabel =
+        'Нажмите для воспроизведения / паузы, проведите пальцем для поиска',
   }) : super(
           attachmentButtonAccessibilityLabel:
               attachmentButtonAccessibilityLabel,
@@ -239,6 +296,13 @@ class ChatL10nUk extends ChatL10n {
     String fileButtonAccessibilityLabel = 'Файл',
     String inputPlaceholder = 'Повідомлення',
     String sendButtonAccessibilityLabel = 'Надіслати',
+    String today = 'Сьогодні',
+    String yesterday = 'Учора',
+    String audioButtonAccessibilityLabel = 'Записати звукове повідомлення',
+    String playButtonAccessibilityLabel = 'Відтворіть',
+    String pauseButtonAccessibilityLabel = 'Призупиніть',
+    String audioTrackAccessibilityLabel =
+        'Натисніть, щоб відтворити / призупинити, проведіть пальцем, щоб шукати',
   }) : super(
           attachmentButtonAccessibilityLabel:
               attachmentButtonAccessibilityLabel,

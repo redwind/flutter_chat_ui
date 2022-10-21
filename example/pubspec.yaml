@@ -42,6 +42,8 @@ dependencies:
   mime: ^1.0.1
   open_file: ^3.2.1
   uuid: ^3.0.6
+  permission_handler: ^7.1.0
+  http: ^0.13.3
 
 dev_dependencies:
   flutter_test:
@@ -53,7 +55,13 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^1.0.4
-
+#TODO disable overrides before pull request
+dependency_overrides:
+  flutter_chat_types:
+    #path: ../../flutter_chat_types
+    git:
+      url: https://github.com/sarbogast/flutter_chat_types
+      ref: feature/audio_message_types
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 

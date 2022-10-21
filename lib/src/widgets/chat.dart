@@ -76,6 +76,7 @@ class Chat extends StatefulWidget {
     this.timeFormat,
     this.usePreviewData = true,
     required this.user,
+    this.onAudioRecorded,
   }) : super(key: key);
 
   /// See [Message.avatarBuilder]
@@ -161,6 +162,14 @@ class Chat extends StatefulWidget {
 
   /// See [Message.isTextMessageTextSelectable]
   final bool isTextMessageTextSelectable;
+
+  /// See [Input.onAudioRecorded]
+  final Future<bool> Function({
+    required Duration length,
+    required String filePath,
+    required List<double> waveForm,
+    required String mimeType,
+  })? onAudioRecorded;
 
   /// Localized copy. Extend [ChatL10n] class to create your own copy or use
   /// existing one, like the default [ChatL10nEn]. You can customize only
@@ -509,6 +518,7 @@ class _ChatState extends State<Chat> {
                           isAttachmentUploading: widget.isAttachmentUploading,
                           onAttachmentPressed: widget.onAttachmentPressed,
                           onSendPressed: widget.onSendPressed,
+                          onAudioRecorded: widget.onAudioRecorded,
                           onTextChanged: widget.onTextChanged,
                           onTextFieldTap: widget.onTextFieldTap,
                           sendButtonVisibilityMode:

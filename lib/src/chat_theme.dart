@@ -100,6 +100,13 @@ abstract class ChatTheme {
     required this.userAvatarNameColors,
     required this.userAvatarTextStyle,
     required this.userNameTextStyle,
+    required this.subtitle2Color,
+    required this.audioButtonIcon,
+    required this.recordButtonIcon,
+    required this.pauseButtonIcon,
+    required this.cancelRecordingButtonIcon,
+    required this.recordColor,
+    required this.playButtonIcon,
   });
 
   /// Icon for select attachment button
@@ -107,6 +114,9 @@ abstract class ChatTheme {
 
   /// Margin of attachment button
   final EdgeInsets? attachmentButtonMargin;
+
+  /// Icon for audio recording button
+  final String? audioButtonIcon;
 
   /// Used as a background color of a chat widget
   final Color backgroundColor;
@@ -271,6 +281,25 @@ abstract class ChatTheme {
 
   /// User names text style. Color will be overwritten with [userAvatarNameColors].
   final TextStyle userNameTextStyle;
+
+  /// Largest text style, used for displaying title of a link preview
+  final TextStyle subtitle1;
+
+  /// Icon for record button
+  final String? recordButtonIcon;
+
+  /// Icon for recording cancellation button
+  final String? cancelRecordingButtonIcon;
+
+  /// Icon for pause button
+  final String? pauseButtonIcon;
+
+  /// Color of the recording button, used for the recording button itself
+  /// as well as for the animated decibel gauge
+  final Color recordColor;
+
+  /// Icon for play button
+  final String? playButtonIcon;
 }
 
 /// Default chat theme which extends [ChatTheme]
@@ -403,6 +432,13 @@ class DefaultChatTheme extends ChatTheme {
       fontWeight: FontWeight.w800,
       height: 1.333,
     ),
+    Color subtitle2Color = const Color(0xff1d1d21),
+    String? audioButtonIcon,
+    String? recordButtonIcon,
+    String? pauseButtonIcon,
+    String? cancelRecordingButtonIcon,
+    Color recordColor = Colors.red,
+    String? playButtonIcon,
   }) : super(
           attachmentButtonIcon: attachmentButtonIcon,
           attachmentButtonMargin: attachmentButtonMargin,
@@ -457,6 +493,13 @@ class DefaultChatTheme extends ChatTheme {
           userAvatarNameColors: userAvatarNameColors,
           userAvatarTextStyle: userAvatarTextStyle,
           userNameTextStyle: userNameTextStyle,
+          subtitle2Color: subtitle2Color,
+          audioButtonIcon: audioButtonIcon,
+          recordButtonIcon: recordButtonIcon,
+          pauseButtonIcon: pauseButtonIcon,
+          cancelRecordingButtonIcon: cancelRecordingButtonIcon,
+          recordColor: recordColor,
+          playButtonIcon: playButtonIcon,
         );
 }
 
@@ -590,6 +633,13 @@ class DarkChatTheme extends ChatTheme {
       fontWeight: FontWeight.w800,
       height: 1.333,
     ),
+    Color subtitle2Color = const Color(0xffffffff),
+    String? audioButtonIcon,
+    String? recordButtonIcon,
+    String? pauseButtonIcon,
+    String? cancelRecordingButtonIcon,
+    Color recordColor = Colors.red,
+    String? playButtonIcon,
   }) : super(
           attachmentButtonIcon: attachmentButtonIcon,
           attachmentButtonMargin: attachmentButtonMargin,
@@ -644,5 +694,12 @@ class DarkChatTheme extends ChatTheme {
           userAvatarNameColors: userAvatarNameColors,
           userAvatarTextStyle: userAvatarTextStyle,
           userNameTextStyle: userNameTextStyle,
+          subtitle2Color: subtitle2Color,
+          audioButtonIcon: audioButtonIcon,
+          recordButtonIcon: recordButtonIcon,
+          pauseButtonIcon: pauseButtonIcon,
+          cancelRecordingButtonIcon: cancelRecordingButtonIcon,
+          recordColor: recordColor,
+          playButtonIcon: playButtonIcon,
         );
 }

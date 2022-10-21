@@ -1,10 +1,14 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 
 import '../models/send_button_visibility_mode.dart';
+import 'package:flutter_chat_ui/src/widgets/audio_button.dart';
 import 'attachment_button.dart';
+import 'audio_recorder.dart';
 import 'inherited_chat_theme.dart';
 import 'inherited_l10n.dart';
 import 'send_button.dart';
@@ -29,6 +33,7 @@ class Input extends StatefulWidget {
     this.onTextChanged,
     this.onTextFieldTap,
     required this.sendButtonVisibilityMode,
+    this.onAudioRecorded,
   }) : super(key: key);
 
   /// See [AttachmentButton.onPressed]
@@ -55,6 +60,14 @@ class Input extends StatefulWidget {
   /// Defaults to [SendButtonVisibilityMode.editing].
   final SendButtonVisibilityMode sendButtonVisibilityMode;
 
+  /// See [AudioButton.onPressed]
+  final Future<bool> Function({
+    required Duration length,
+    required String filePath,
+    required List<double> waveForm,
+    required String mimeType,
+  })? onAudioRecorded;
+
   @override
   _InputState createState() => _InputState();
 }
@@ -62,8 +75,11 @@ class Input extends StatefulWidget {
 /// [Input] widget state
 class _InputState extends State<Input> {
   final _inputFocusNode = FocusNode();
-  bool _sendButtonVisible = false;
+  final _audioRecorderKey = GlobalKey<AudioRecorderState>();
   final _textController = TextEditingController();
+  bool _sendButtonVisible = false;
+  bool _recordingAudio = false;
+  bool _audioUploading = false;
 
   @override
   void initState() {
@@ -85,6 +101,63 @@ class _InputState extends State<Input> {
     _inputFocusNode.dispose();
     _textController.dispose();
     super.dispose();
+  }
+
+  Widget _audioWidget() {
+    if (_audioUploading == true) {
+      return SizedBox(
+        height: 24,
+        width: 24,
+        child: CircularProgressIndicator(
+          backgroundColor: Colors.transparent,
+          strokeWidth: 2,
+          valueColor: AlwaysStoppedAnimation<Color>(
+            InheritedChatTheme.of(context).theme.inputTextColor,
+          ),
+        ),
+      );
+    } else {
+      return AudioButton(
+        onPressed: _toggleRecording,
+        recordingAudio: _recordingAudio,
+      );
+    }
+  }
+
+  Future<void> _toggleRecording() async {
+    if (!_recordingAudio) {
+      setState(() {
+        _recordingAudio = true;
+      });
+    } else {
+      final audioRecording =
+          await _audioRecorderKey.currentState!.stopRecording();
+      if (audioRecording != null) {
+        setState(() {
+          _audioUploading = true;
+        });
+        final success = await widget.onAudioRecorded!(
+          length: audioRecording.duration,
+          filePath: audioRecording.filePath,
+          waveForm: audioRecording.decibelLevels,
+          mimeType: audioRecording.mimeType,
+        );
+        setState(() {
+          _audioUploading = false;
+        });
+        if (success) {
+          setState(() {
+            _recordingAudio = false;
+          });
+        }
+      }
+    }
+  }
+
+  void _cancelRecording() async {
+    setState(() {
+      _recordingAudio = false;
+    });
   }
 
   void _handleNewLine() {
@@ -165,7 +238,7 @@ class _InputState extends State<Input> {
             padding: _safeAreaInsets,
             child: Row(
               children: [
-                if (widget.onAttachmentPressed != null)
+                if (widget.onAttachmentPressed != null && !_recordingAudio)
                   AttachmentButton(
                     isLoading: widget.isAttachmentUploading ?? false,
                     onPressed: widget.onAttachmentPressed,
@@ -174,43 +247,50 @@ class _InputState extends State<Input> {
                 Expanded(
                   child: Padding(
                     padding: _textPadding,
-                    child: TextField(
-                      controller: _textController,
-                      cursorColor: InheritedChatTheme.of(context)
-                          .theme
-                          .inputTextCursorColor,
-                      decoration: InheritedChatTheme.of(context)
-                          .theme
-                          .inputTextDecoration
-                          .copyWith(
-                            hintStyle: InheritedChatTheme.of(context)
+                    child: _recordingAudio
+                        ? AudioRecorder(
+                            key: _audioRecorderKey,
+                            onCancelRecording: _cancelRecording,
+                            disabled: _audioUploading,
+                          )
+                        : TextField(
+                            controller: _textController,
+                            cursorColor: InheritedChatTheme.of(context)
+                                .theme
+                                .inputTextCursorColor,
+                            decoration: InheritedChatTheme.of(context)
+                                .theme
+                                .inputTextDecoration
+                                .copyWith(
+                                  hintStyle: InheritedChatTheme.of(context)
+                                      .theme
+                                      .inputTextStyle
+                                      .copyWith(
+                                        color: InheritedChatTheme.of(context)
+                                            .theme
+                                            .inputTextColor
+                                            .withOpacity(0.5),
+                                      ),
+                                  hintText: InheritedL10n.of(context)
+                                      .l10n
+                                      .inputPlaceholder,
+                                ),
+                            focusNode: _inputFocusNode,
+                            keyboardType: TextInputType.multiline,
+                            maxLines: 5,
+                            minLines: 1,
+                            onChanged: widget.onTextChanged,
+                            onTap: widget.onTextFieldTap,
+                            style: InheritedChatTheme.of(context)
                                 .theme
                                 .inputTextStyle
                                 .copyWith(
                                   color: InheritedChatTheme.of(context)
                                       .theme
-                                      .inputTextColor
-                                      .withOpacity(0.5),
+                                      .inputTextColor,
                                 ),
-                            hintText:
-                                InheritedL10n.of(context).l10n.inputPlaceholder,
+                            textCapitalization: TextCapitalization.sentences,
                           ),
-                      focusNode: _inputFocusNode,
-                      keyboardType: TextInputType.multiline,
-                      maxLines: 5,
-                      minLines: 1,
-                      onChanged: widget.onTextChanged,
-                      onTap: widget.onTextFieldTap,
-                      style: InheritedChatTheme.of(context)
-                          .theme
-                          .inputTextStyle
-                          .copyWith(
-                            color: InheritedChatTheme.of(context)
-                                .theme
-                                .inputTextColor,
-                          ),
-                      textCapitalization: TextCapitalization.sentences,
-                    ),
                   ),
                 ),
                 Visibility(
@@ -219,6 +299,11 @@ class _InputState extends State<Input> {
                     onPressed: _handleSendPressed,
                     padding: _buttonPadding,
                   ),
+                ),
+                Visibility(
+                  visible:
+                      widget.onAudioRecorded != null && !_sendButtonVisible,
+                  child: _audioWidget(),
                 ),
               ],
             ),
