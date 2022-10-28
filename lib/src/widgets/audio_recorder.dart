@@ -280,12 +280,14 @@ class AudioRecorderState extends State<AudioRecorder> {
                           ),
                         ),
                         textAlign: TextAlign.center,
-                        style:
-                            InheritedChatTheme.of(context).theme.body1.copyWith(
-                                  color: InheritedChatTheme.of(context)
-                                      .theme
-                                      .inputTextColor,
-                                ),
+                        style: InheritedChatTheme.of(context)
+                            .theme
+                            .receivedMessageBodyTextStyle
+                            .copyWith(
+                              color: InheritedChatTheme.of(context)
+                                  .theme
+                                  .inputTextColor,
+                            ),
                       ),
                     ),
                   ],

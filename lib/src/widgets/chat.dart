@@ -77,6 +77,7 @@ class Chat extends StatefulWidget {
     this.usePreviewData = true,
     required this.user,
     this.onAudioRecorded,
+    this.onAudioRecordPressed,
   }) : super(key: key);
 
   /// See [Message.avatarBuilder]
@@ -170,6 +171,8 @@ class Chat extends StatefulWidget {
     required List<double> waveForm,
     required String mimeType,
   })? onAudioRecorded;
+
+  final Future<bool> Function()? onAudioRecordPressed;
 
   /// Localized copy. Extend [ChatL10n] class to create your own copy or use
   /// existing one, like the default [ChatL10nEn]. You can customize only
@@ -519,6 +522,7 @@ class _ChatState extends State<Chat> {
                           onAttachmentPressed: widget.onAttachmentPressed,
                           onSendPressed: widget.onSendPressed,
                           onAudioRecorded: widget.onAudioRecorded,
+                          onAudioRecordPressed: widget.onAudioRecordPressed,
                           onTextChanged: widget.onTextChanged,
                           onTextFieldTap: widget.onTextFieldTap,
                           sendButtonVisibilityMode:

@@ -34,6 +34,7 @@ class Input extends StatefulWidget {
     this.onTextFieldTap,
     required this.sendButtonVisibilityMode,
     this.onAudioRecorded,
+    this.onAudioRecordPressed,
   }) : super(key: key);
 
   /// See [AttachmentButton.onPressed]
@@ -67,6 +68,8 @@ class Input extends StatefulWidget {
     required List<double> waveForm,
     required String mimeType,
   })? onAudioRecorded;
+
+  final Future<bool> Function()? onAudioRecordPressed;
 
   @override
   _InputState createState() => _InputState();
@@ -118,7 +121,16 @@ class _InputState extends State<Input> {
       );
     } else {
       return AudioButton(
-        onPressed: _toggleRecording,
+        onPressed: () async {
+          if (widget.onAudioRecordPressed != null) {
+            widget.onAudioRecordPressed!().then((value) {
+              print("AudioButton onAudioRecordPressed ${value}");
+              if (value) _toggleRecording();
+            });
+          } else {
+            _toggleRecording();
+          }
+        },
         recordingAudio: _recordingAudio,
       );
     }

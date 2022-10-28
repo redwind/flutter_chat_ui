@@ -86,8 +86,8 @@ class _AudioMessageState extends State<AudioMessage> {
   @override
   Widget build(BuildContext context) {
     final _user = InheritedUser.of(context).user;
-    final _color = _user.id == widget.message.authorId
-        ? InheritedChatTheme.of(context).theme.primaryTextColor
+    final _color = _user.id == widget.message.author.id
+        ? InheritedChatTheme.of(context).theme.secondaryColor
         : InheritedChatTheme.of(context).theme.primaryColor;
 
     return Container(
@@ -162,13 +162,13 @@ class _AudioMessageState extends State<AudioMessage> {
                                       }
                                     : null,
                                 waveForm: widget.message.waveForm,
-                                color: _user.id == widget.message.authorId
+                                color: _user.id == widget.message.author.id
                                     ? InheritedChatTheme.of(context)
                                         .theme
-                                        .primaryTextColor
+                                        .secondaryColor
                                     : InheritedChatTheme.of(context)
                                         .theme
-                                        .secondaryTextColor,
+                                        .primaryColor,
                                 duration: snapshot.hasData
                                     ? snapshot.data!.duration
                                     : widget.message.length,
@@ -183,13 +183,13 @@ class _AudioMessageState extends State<AudioMessage> {
                                 .audioTrackAccessibilityLabel,
                             onTap: _togglePlaying,
                             waveForm: widget.message.waveForm,
-                            color: _user.id == widget.message.authorId
+                            color: _user.id == widget.message.author.id
                                 ? InheritedChatTheme.of(context)
                                     .theme
-                                    .primaryTextColor
+                                    .secondaryColor
                                 : InheritedChatTheme.of(context)
                                     .theme
-                                    .secondaryTextColor,
+                                    .primaryColor,
                             duration: widget.message.length,
                             position: const Duration(),
                           ),
@@ -210,18 +210,13 @@ class _AudioMessageState extends State<AudioMessage> {
                                     : widget.message.length.inMilliseconds,
                               ),
                             ),
-                            style: InheritedChatTheme.of(context)
-                                .theme
-                                .caption
-                                .copyWith(
-                                  color: _user.id == widget.message.authorId
-                                      ? InheritedChatTheme.of(context)
-                                          .theme
-                                          .primaryTextColor
-                                      : InheritedChatTheme.of(context)
-                                          .theme
-                                          .secondaryTextColor,
-                                ),
+                            style: _user.id == widget.message.author.id
+                                ? InheritedChatTheme.of(context)
+                                    .theme
+                                    .sentMessageCaptionTextStyle
+                                : InheritedChatTheme.of(context)
+                                    .theme
+                                    .receivedMessageCaptionTextStyle,
                             textWidthBasis: TextWidthBasis.longestLine,
                           );
                         })
@@ -232,16 +227,13 @@ class _AudioMessageState extends State<AudioMessage> {
                           widget.message.length.inMilliseconds,
                         ),
                       ),
-                      style:
-                          InheritedChatTheme.of(context).theme.caption.copyWith(
-                                color: _user.id == widget.message.authorId
-                                    ? InheritedChatTheme.of(context)
-                                        .theme
-                                        .primaryTextColor
-                                    : InheritedChatTheme.of(context)
-                                        .theme
-                                        .secondaryTextColor,
-                              ),
+                      style: _user.id == widget.message.author.id
+                          ? InheritedChatTheme.of(context)
+                              .theme
+                              .sentMessageCaptionTextStyle
+                          : InheritedChatTheme.of(context)
+                              .theme
+                              .receivedMessageCaptionTextStyle,
                       textWidthBasis: TextWidthBasis.longestLine,
                     ),
                 ],

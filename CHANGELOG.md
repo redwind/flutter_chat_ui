@@ -203,7 +203,7 @@ Theme migration guide:
 - `body1` replaced with `emptyChatPlaceholderTextStyle`, `inputTextStyle`, `receivedMessageBodyTextStyle`, `sentMessageBodyTextStyle`
 - `body2` replaced with `receivedMessageLinkDescriptionTextStyle`, `sentMessageLinkDescriptionTextStyle`
 - `subtitle1` replaced with `receivedMessageLinkTitleTextStyle`, `sentMessageLinkTitleTextStyle`
-- `subtitle2` and `subtitle2Color` are replaced with `dateDividerTextStyle`
+- `subtitle2` and `` are replaced with `dateDividerTextStyle`
 - `caption` and `captionColor` are replaced with `receivedMessageCaptionTextStyle`, `sentMessageCaptionTextStyle`
 - `primaryTextColor` replaced with `receivedMessageDocumentIconColor`, `sentMessageDocumentIconColor`
 - `secondaryTextColor` replaced with `receivedMessageBodyTextStyle`

@@ -1,10 +1,7 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
-=======
 import 'package:flutter_chat_ui/src/widgets/audio_message.dart';
 import 'package:intl/intl.dart';
->>>>>>> Feature/audio_message
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:visibility_detector/visibility_detector.dart';
 
@@ -203,22 +200,15 @@ class Message extends StatelessWidget {
             : FileMessage(message: fileMessage);
       case types.MessageType.image:
         final imageMessage = message as types.ImageMessage;
-<<<<<<< HEAD
         return imageMessageBuilder != null
             ? imageMessageBuilder!(imageMessage, messageWidth: messageWidth)
             : ImageMessage(message: imageMessage, messageWidth: messageWidth);
-=======
-        return ImageMessage(
-          message: imageMessage,
-          messageWidth: messageWidth,
-        );
       case types.MessageType.audio:
         final audioMessage = message as types.AudioMessage;
         return AudioMessage(
           message: audioMessage,
           messageWidth: messageWidth,
         );
->>>>>>> Feature/audio_message
       case types.MessageType.text:
         final textMessage = message as types.TextMessage;
         return textMessageBuilder != null
